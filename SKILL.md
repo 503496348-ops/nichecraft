@@ -138,7 +138,7 @@ python3 scripts/html_deck/engine.py --list-themes
 
 ### 融合来源
 
-HTML演示引擎融合自 [guizang-ppt-skill](https://github.com/op7418/guizang-ppt-skill)（歸藏，18.3K⭐）的模板系统和设计参考。品牌归属已统一。
+HTML演示引擎提供多种模板系统和设计参考。
 
 ## 快速参考
 
