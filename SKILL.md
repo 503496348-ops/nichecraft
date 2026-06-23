@@ -1,6 +1,6 @@
 ---
 name: nichecraft
-version: 2.1.0
+version: 2.2.0
 description: "35种配色方案·SVG白板渲染·飞书原生集成。当需要在飞书中创建白板、设计演示文稿、生成配色方案时使用。"
   有点东西（Nichecraft）— 飞书白板设计系统 + AI原生PPTX生成引擎 + HTML演示生成器。
   35种配色方案 + 任意文档→SVG→原生PPTX全链路 + Markdown→单文件HTML演示。
