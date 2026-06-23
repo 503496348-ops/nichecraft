@@ -10,6 +10,13 @@ license: MIT
 tags: [feishu, whiteboard, design-system, svg, pptx, html, presentation, infographic, visual, lark, 飞书, 白板, PPT, HTML, 设计]
 requires_tools: [terminal, read_file, write_file]
 requires_toolsets: [terminal, file]
+
+triggers:
+  - PPT生成
+  - 白板设计
+  - 演示文稿
+  - nichecraft
+  - 有点东西
 ---
 
 # 有点东西 · Nichecraft 2.1 — 飞书白板设计 + AI原生PPTX引擎 + HTML演示生成器
