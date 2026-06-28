@@ -1,6 +1,5 @@
 """Excalidraw SVG Generator - 手绘风格SVG生成器
 
-融合自 excalidraw/excalidraw (301K⭐) 的核心渲染算法。
 将 excalidraw 的手绘风格SVG生成能力移植为 Python 模块。
 
 核心能力：
@@ -10,7 +9,6 @@
 - 圆角控制（roundness）
 - SVG 序列化输出
 
-融合自: excalidraw/excalidraw packages/element/src/renderElement.ts,
         excalidraw/excalidraw packages/excalidraw/scene/export.ts
 """
 
@@ -91,7 +89,6 @@ def _rough_line(x1: float, y1: float, x2: float, y2: float,
                 roughness: float = 1.0, seed: int = 0) -> list[Point]:
     """手绘风格线条
     
-    融合自 excalidraw 的 rough.js 渲染算法：
     在直线基础上添加随机偏移，模拟手绘效果。
     """
     random.seed(seed)
@@ -122,7 +119,6 @@ def _rough_rectangle(x: float, y: float, width: float, height: float,
                      roughness: float = 1.0, seed: int = 0) -> list[list[Point]]:
     """手绘风格矩形
     
-    融合自 excalidraw 的矩形渲染：
     四条边分别用 rough_line 生成。
     """
     random.seed(seed)
@@ -140,7 +136,6 @@ def _rough_ellipse(cx: float, cy: float, rx: float, ry: float,
                    roughness: float = 1.0, seed: int = 0) -> list[Point]:
     """手绘风格椭圆
     
-    融合自 excalidraw 的椭圆渲染：
     用多段线近似椭圆，每段添加随机偏移。
     """
     random.seed(seed)
@@ -169,7 +164,6 @@ def _rough_arrow(x1: float, y1: float, x2: float, y2: float,
                  head_length: float = 15, head_angle: float = 0.5) -> tuple[list[Point], list[Point]]:
     """手绘风格箭头
     
-    融合自 excalidraw 的箭头渲染：
     线条 + 箭头头部。
     """
     # 线条
@@ -199,7 +193,6 @@ def _hachure_fill(x: float, y: float, width: float, height: float,
                   stroke_color: str = "#1e1e1e") -> list[tuple[Point, Point]]:
     """影线填充
     
-    融合自 excalidraw 的 hachure 填充算法：
     用平行线填充区域。
     """
     lines = []
@@ -418,7 +411,6 @@ def render_scene_to_svg(elements: list[ExcalidrawElement],
                         texts: dict[str, str] = None) -> str:
     """将场景渲染为 SVG
     
-    融合自 excalidraw 的 scene/export.ts：
     将所有元素渲染为 SVG 字符串。
     
     Args:

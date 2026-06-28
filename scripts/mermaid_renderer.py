@@ -3,7 +3,6 @@
 有点东西-Nichecraft · Mermaid-to-SVG Renderer
 AtomCollide-智械工坊 · 2026
 
-融合自 Excalidraw (125K⭐, +134) 的 Mermaid 集成模式。
 
 支持图表类型:
   - MR1: flowchart (TD/LR方向)

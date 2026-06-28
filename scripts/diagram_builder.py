@@ -1,6 +1,5 @@
 """Diagram Builder - 图表构建器
 
-融合自 excalidraw 的图表创建模式。
 提供高级 API 创建常见图表类型：
 
 - 流程图 (Flowchart)
@@ -9,7 +8,6 @@
 - 架构图 (Architecture Diagram)
 - 数据流图 (Data Flow Diagram)
 
-融合自: excalidraw/excalidraw 的图表模板和布局算法
 """
 
 from dataclasses import dataclass
