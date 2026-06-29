@@ -1,6 +1,5 @@
 """
 Excalidraw Bridge — excalidraw 白板集成适配器
-融合自 excalidraw (126K⭐) 的开放格式与嵌入模式。
 为「有点东西」提供手绘风格白板导出能力。
 
 集成评估结论：
