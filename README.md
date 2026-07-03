@@ -1,3 +1,32 @@
+<!-- ZHIXIE_PROFILE_POLISH_START -->
+
+<p align="left">
+<a href="https://github.com/503496348-ops/nichecraft/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/503496348-ops/nichecraft?style=social"></a>
+<a href="https://github.com/503496348-ops/nichecraft/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/503496348-ops/nichecraft"></a>
+<img alt="License" src="https://img.shields.io/github/license/503496348-ops/nichecraft">
+<a href="https://github.com/503496348-ops/nichecraft/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/503496348-ops/nichecraft/actions/workflows/ci.yml/badge.svg"></a>
+<img alt="Domain" src="https://img.shields.io/badge/domain-%E9%A3%9E%E4%B9%A6%E7%99%BD%E6%9D%BF%E8%AE%BE%E8%AE%A1%2BPPT-blue">
+</p>
+
+## Highlights
+
+- **Product**: Nichecraft / 有点东西
+- **Domain**: 飞书白板设计+PPT
+- **Maintained by**: [503496348-ops](https://github.com/503496348-ops) product matrix
+- **Delivery posture**: one-click setup, doctor diagnostics, smoke test, convergence gate, and clean-clone verification are part of the maintenance standard.
+
+## Quality Gates
+
+```bash
+./install.sh
+python3 scripts/doctor.py
+python3 scripts/smoke.py
+python3 scripts/product_convergence_gate.py --json
+python3 -m pytest tests/ -q
+```
+
+<!-- ZHIXIE_PROFILE_POLISH_END -->
+
 ## 一键安装 / One-click Quickstart
 
 ```bash
