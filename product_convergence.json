@@ -1,0 +1,39 @@
+{
+  "repo": "nichecraft",
+  "entrypoints": [
+    "scripts/confirm_ui/server.py",
+    "scripts/svg_editor/server.py",
+    "scripts/template_fill_pptx/cli.py"
+  ],
+  "smoke_targets": [
+    "scripts/batch_validate.py",
+    "scripts/check_annotations.py",
+    "scripts/product_convergence_gate.py",
+    "scripts/svg_quality_checker.py",
+    "scripts/template_fill_pptx/checker.py"
+  ],
+  "known_external_reference_files": [
+    "references/ai-image-comparison/palette/_manifest.md",
+    "references/ai-image-comparison/rendering/_manifest.md",
+    "references/executor-base.md",
+    "references/html-deck-layouts-swiss.md",
+    "references/image-generator.md",
+    "references/image-layout-patterns.md",
+    "references/shared-standards.md",
+    "references/strategist.md",
+    "references/template-designer.md",
+    "scripts/canvas_state.py",
+    "scripts/finalize_svg.py",
+    "scripts/product_convergence_gate.py",
+    "scripts/register_template.py",
+    "scripts/rotate_images.py",
+    "scripts/svg_finalize/embed_icons.py",
+    "scripts/svg_finalize/embed_images.py",
+    "scripts/svg_finalize/fix_image_aspect.py",
+    "scripts/svg_finalize/flatten_tspan.py",
+    "templates/pin-and-paper/design.md",
+    "workflows/create-brand.md",
+    "workflows/resume-execute.md"
+  ],
+  "policy": "External/fusion references are allowed only when explicitly reviewed here; new fusion work must add a smoke target or entrypoint wiring."
+}
