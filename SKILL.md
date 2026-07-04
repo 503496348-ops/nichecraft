@@ -1,6 +1,6 @@
 ---
 name: nichecraft
-version: 2.2.0
+version: 2.3.0
 description: "飞书白板设计系统 + AI原生PPTX引擎 + HTML演示生成器。当需要创建白板、生成PPT、制作演示文稿时使用。"
 author: AtomCollide-智械工坊团队
 license: MIT
@@ -17,6 +17,10 @@ triggers:
 ---
 
 # 有点东西 · Nichecraft 2.2
+
+## Canvas Interaction Guard（v2.3.0）
+
+新增 `scripts/canvas_interaction_guard.py`：为白板/PPT 画布提供视口锁定、只读态防误操作、工具栏拖拽防护与分组钻取可见性控制，降低编辑态误触和审阅态破坏风险。
 
 > 35种配色方案 + 任意文档→SVG→原生PPTX + Markdown→HTML演示
 
