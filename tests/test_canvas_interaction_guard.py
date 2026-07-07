@@ -1,4 +1,11 @@
-from scripts.canvas_interaction_guard import CanvasInteractionState, ViewportLock, apply_interaction, authorize_canvas_action, enter_group_drilldown, visible_element_ids
+from scripts.canvas_interaction_guard import (
+    CanvasInteractionState,
+    ViewportLock,
+    apply_interaction,
+    authorize_canvas_action,
+    enter_group_drilldown,
+    visible_element_ids,
+)
 
 
 def test_read_only_blocks_mutating_actions():
@@ -27,3 +34,18 @@ def test_tool_selection_keeps_state_immutable_style():
     assert decision["allowed"] is True
     assert state.selected_tool == "select"
     assert next_state.selected_tool == "rectangle"
+    assert state.is_erasing is False
+    assert next_state.is_erasing is False
+
+
+def test_erase_requires_erase_tool_when_not_gestured():
+    state = CanvasInteractionState(selected_tool="select")
+    decision = authorize_canvas_action(state, "erase", {"target_ids": ["a"]})
+    assert decision["allowed"] is False
+    assert decision["reason"] == "erase_requires_erase_tool"
+
+    state_with_tool, decision = apply_interaction(state, "select_tool", {"tool": "erase"})
+    assert decision["allowed"] is True
+    assert state_with_tool.selected_tool == "erase"
+    assert state_with_tool.is_erasing is True
+    assert authorize_canvas_action(state_with_tool, "erase", {"target_ids": ["a"]})["allowed"] is True
