@@ -5,6 +5,21 @@ import sys
 from pathlib import Path
 from typing import Optional
 
+try:
+    from .motion_patterns import (
+        animation_value,
+        motion_attributes,
+        recommend_motion,
+        validate_motion_plan,
+    )
+except ImportError:  # Direct execution: python scripts/html_deck/engine.py
+    from motion_patterns import (  # type: ignore
+        animation_value,
+        motion_attributes,
+        recommend_motion,
+        validate_motion_plan,
+    )
+
 # ── Themes ───────────────────────────────────────────────────────────
 MAGAZINE_THEMES = {
     "ink": {
@@ -135,19 +150,36 @@ def render_slide_html(slide: dict, index: int, style: str) -> str:
     hero_cls = " hero" if is_hero else ""
     title = slide["title"]
     body = slide["body"]
+    motion = recommend_motion(slide, index)
+    section_motion_attrs = motion_attributes(motion)
+    anim = animation_value(motion)
 
     # Convert markdown body to HTML
     body_html = _md_to_html(body)
 
     if style == "swiss":
-        return _render_swiss_slide(title, body_html, dark, hero_cls, slide["layout"], index)
-    else:
-        return _render_magazine_slide(title, body_html, dark, hero_cls, slide["layout"], index)
+        return _render_swiss_slide(
+            title, body_html, dark, hero_cls, slide["layout"], index,
+            section_motion_attrs, anim,
+        )
+    return _render_magazine_slide(
+        title, body_html, dark, hero_cls, slide["layout"], index,
+        section_motion_attrs, anim,
+    )
 
 
-def _render_magazine_slide(title: str, body_html: str, dark: str, hero_cls: str, layout: str, index: int) -> str:
+def _render_magazine_slide(
+    title: str,
+    body_html: str,
+    dark: str,
+    hero_cls: str,
+    layout: str,
+    index: int,
+    section_motion_attrs: str,
+    anim: str,
+) -> str:
     chrome = f'<div class="chrome">SLIDE {index + 1:02d}</div>'
-    title_html = f'<h1 class="h1-zh" data-anim>{title}</h1>' if title else ""
+    title_html = f'<h1 class="h1-zh" data-anim="{anim}">{title}</h1>' if title else ""
 
     if layout == "quote":
         content = f'<blockquote class="pull-quote" data-anim>{body_html}</blockquote>'
@@ -161,16 +193,25 @@ def _render_magazine_slide(title: str, body_html: str, dark: str, hero_cls: str,
         content = f'{title_html}<div class="frame" data-anim>{body_html}</div>'
 
     return (
-        f'<section class="slide {dark}{hero_cls}">\n'
+        f'<section class="slide {dark}{hero_cls}" {section_motion_attrs}>\n'
         f'  {chrome}\n'
         f'  {content}\n'
         f'</section>\n'
     )
 
 
-def _render_swiss_slide(title: str, body_html: str, dark: str, hero_cls: str, layout: str, index: int) -> str:
+def _render_swiss_slide(
+    title: str,
+    body_html: str,
+    dark: str,
+    hero_cls: str,
+    layout: str,
+    index: int,
+    section_motion_attrs: str,
+    anim: str,
+) -> str:
     chrome = f'<div class="chrome-min"><span>NICHECRAFT</span><span>{index + 1:02d}</span></div>'
-    title_html = f'<h2 class="lead" data-anim="cascade">{title}</h2>' if title else ""
+    title_html = f'<h2 class="lead" data-anim="{anim}">{title}</h2>' if title else ""
 
     if layout == "quote":
         content = f'<div class="canvas-card" data-anim="cascade">{body_html}</div>'
@@ -187,7 +228,7 @@ def _render_swiss_slide(title: str, body_html: str, dark: str, hero_cls: str, la
         content = f'{title_html}<div class="canvas-card" data-anim="cascade">{body_html}</div>'
 
     return (
-        f'<section class="slide {dark}{hero_cls}">\n'
+        f'<section class="slide {dark}{hero_cls}" {section_motion_attrs}>\n'
         f'  {chrome}\n'
         f'  {content}\n'
         f'</section>\n'
@@ -364,6 +405,11 @@ def markdown_to_html_deck(
     slides = parse_markdown_slides(md_text)
     if not slides:
         raise ValueError("No slides found in markdown. Use --- or ## to split slides.")
+
+    motion_profiles = [recommend_motion(slide, index) for index, slide in enumerate(slides)]
+    motion_warnings = validate_motion_plan(motion_profiles)
+    if motion_warnings:
+        raise ValueError(f"Motion plan violates deck budgets: {', '.join(motion_warnings)}")
 
     slides_html = [render_slide_html(s, i, style) for i, s in enumerate(slides)]
     html = build_html(slides_html, title, style, theme)

@@ -1,6 +1,6 @@
 ---
 name: nichecraft
-version: 2.3.0
+version: 2.4.0
 description: "飞书白板设计系统 + AI原生PPTX引擎 + HTML演示生成器。当需要创建白板、生成PPT、制作演示文稿时使用。"
 author: AtomCollide-智械工坊团队
 license: MIT
@@ -16,7 +16,11 @@ triggers:
   - 有点东西
 ---
 
-# 有点东西 · Nichecraft 2.2
+# 有点东西 · Nichecraft 2.4
+
+## HTML Deck 交互动效策略（v2.4.0）
+
+新增 `scripts/html_deck/motion_patterns.py`，根据封面、数据表、图片、引用和正文等页面意图自动选择动效 profile，并把性能预算、静态降级和单页动效元素上限写入 HTML section。生成结果默认兼容 `prefers-reduced-motion` 与低性能模式，避免为了视觉效果牺牲可读性和移动端稳定性。
 
 ## Canvas Interaction Guard（v2.3.0）
 
