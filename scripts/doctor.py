@@ -4,6 +4,7 @@ from __future__ import annotations
 import json, shutil, subprocess, sys
 from datetime import datetime
 from pathlib import Path
+from anti_ai_style_guard import collect_style_guard_report
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -35,6 +36,12 @@ def collect_run_report(root: Path | None = None) -> dict:
             add('package.json parseable', False, f'JSON 解析失败: {exc}')
     else:
         print('[INFO] package.json absent; shell/python one-click path is primary')
+
+    slop = collect_style_guard_report(root)
+    # 反 AI 风格检测为辅助项：不作为主环境健康直接失败条件，避免历史文本风格污染导致误阻断
+    for item in slop.get('checks', []):
+        if not bool(item.get('ok', False)):
+            print(f"[WARN] {item.get('name')} (样式风险) — {item.get('fix', '').strip()}")
 
     gate = root/'scripts/product_convergence_gate.py'
     if gate.exists():

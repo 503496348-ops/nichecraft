@@ -9,6 +9,7 @@ import sys
 from typing import Any
 
 from nichecraft_history_store import latest_runs, save_run
+from anti_ai_style_guard import collect_style_guard_report
 from doctor import ROOT
 
 try:
@@ -54,6 +55,11 @@ def create_app() -> FastAPI:
     def diag() -> dict[str, Any]:
         from doctor import collect_run_report
         return collect_run_report(ROOT)
+
+
+    @app.get('/diag/style')
+    def diag_style() -> dict[str, object]:
+        return collect_style_guard_report(ROOT)
 
     @app.get('/diag/latest')
     def diag_latest(limit: int = 10) -> list[dict[str, Any]]:
