@@ -36,6 +36,7 @@ triggers:
 - **HTML演示**：Markdown→单文件HTML（杂志风/瑞士风，WebGL背景，零依赖）
 - **TTS旁白**：Edge/ElevenLabs/CosyVoice/MiniMax/Qwen 多后端
 - **图片生成**：15种AI后端 + Pexels/Pixabay/Wikimedia搜索
+- **Excalidraw 融合能力**：新增 `scripts/excalidraw_bridge.py`，支持流程图/表格/思维导图导出为 `.excalidraw`，可直接用于白板协作链路
 
 ## 操作流程
 

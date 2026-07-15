@@ -7,6 +7,7 @@
     "doctor": "python3 scripts/doctor.py",
     "style-guard": "python3 scripts/anti_ai_style_guard.py",
     "smoke": "python3 scripts/smoke.py",
+    "excalidraw:bridge": "python3 scripts/excalidraw_bridge.py --mode flow --sample",
     "check:syntax": "python3 -m py_compile scripts/*.py",
     "test": "python3 -m pytest tests/test_one_click_open_box.py -q",
     "api": "python3 scripts/nichecraft_api.py"

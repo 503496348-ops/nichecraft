@@ -1,9 +1,15 @@
 #!/usr/bin/env python3
 """Human-readable environment doctor for one-click users."""
 from __future__ import annotations
-import json, shutil, subprocess, sys
+
+import json
+import shutil
+import subprocess
+import sys
+import tempfile
 from datetime import datetime
 from pathlib import Path
+
 from anti_ai_style_guard import collect_style_guard_report
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -19,23 +25,52 @@ def collect_run_report(root: Path | None = None) -> dict:
         ok &= passed
         checks.append({"name": name, "ok": passed, "fix": fix})
 
-    add('README.md exists', (root/'README.md').exists(), '缺 README，用户无法按步骤安装')
-    add('SKILL.md exists', (root/'SKILL.md').exists(), '缺 SKILL.md，产品说明不完整')
-    add('install.sh exists', (root/'install.sh').exists(), '运行: bash install.sh')
-    add('setup.py exists', (root/'scripts/setup.py').exists(), '缺一键 setup 入口')
-    add('smoke.py exists', (root/'scripts/smoke.py').exists(), '缺核心 smoke 入口')
+    add('README.md exists', (root / 'README.md').exists(), '缺 README，用户无法按步骤安装')
+    add('SKILL.md exists', (root / 'SKILL.md').exists(), '缺 SKILL.md，产品说明不完整')
+    add('install.sh exists', (root / 'install.sh').exists(), '运行: bash install.sh')
+    add('setup.py exists', (root / 'scripts/setup.py').exists(), '缺一键 setup 入口')
+    add('smoke.py exists', (root / 'scripts/smoke.py').exists(), '缺核心 smoke 入口')
     add('python available', shutil.which('python3') is not None or shutil.which('python') is not None, '请安装 Python 3')
 
-    pkg = root/'package.json'
+    pkg = root / 'package.json'
     if pkg.exists():
         try:
             scripts = json.loads(pkg.read_text()).get('scripts', {})
-            for script in ['setup','doctor','smoke','test']:
+            for script in ['setup', 'doctor', 'smoke', 'test']:
                 add(f'npm script {script}', script in scripts, f'在 package.json scripts 中补充 {script}')
         except Exception as exc:
             add('package.json parseable', False, f'JSON 解析失败: {exc}')
     else:
         print('[INFO] package.json absent; shell/python one-click path is primary')
+
+    bridge_script = root / 'scripts' / 'excalidraw_bridge.py'
+    if bridge_script.exists():
+        try:
+            with tempfile.TemporaryDirectory(prefix='nichecraft-excalidraw-') as tmpdir:
+                out = Path(tmpdir) / 'sample.excalidraw'
+                subprocess.check_call(
+                    [
+                        sys.executable,
+                        str(bridge_script),
+                        '--mode',
+                        'flow',
+                        '--sample',
+                        '--output',
+                        str(out),
+                    ],
+                    cwd=root,
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,
+                )
+                add('excalidraw bridge smoke', out.exists())
+        except Exception:
+            add(
+                'excalidraw bridge smoke',
+                False,
+                '运行 python scripts/excalidraw_bridge.py --mode flow --sample --output /tmp/sample.excalidraw',
+            )
+    else:
+        add('excalidraw bridge script', False, '缺 scripts/excalidraw_bridge.py')
 
     slop = collect_style_guard_report(root)
     # 反 AI 风格检测为辅助项：不作为主环境健康直接失败条件，避免历史文本风格污染导致误阻断
@@ -43,7 +78,7 @@ def collect_run_report(root: Path | None = None) -> dict:
         if not bool(item.get('ok', False)):
             print(f"[WARN] {item.get('name')} (样式风险) — {item.get('fix', '').strip()}")
 
-    gate = root/'scripts/product_convergence_gate.py'
+    gate = root / 'scripts/product_convergence_gate.py'
     if gate.exists():
         try:
             subprocess.check_call([sys.executable, str(gate), '--json'], cwd=root, stdout=subprocess.DEVNULL)

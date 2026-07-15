@@ -11,7 +11,8 @@
     "scripts/product_convergence_gate.py",
     "scripts/html_deck/motion_patterns.py",
     "scripts/svg_quality_checker.py",
-    "scripts/template_fill_pptx/checker.py"
+    "scripts/template_fill_pptx/checker.py",
+    "scripts/excalidraw_bridge.py"
   ],
   "known_external_reference_files": [
     "references/ai-image-comparison/palette/_manifest.md",

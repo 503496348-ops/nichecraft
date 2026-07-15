@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """Optional FastAPI service for Nichecraft diagnostics."""
 from __future__ import annotations
 
@@ -41,6 +42,34 @@ def _run_doctor() -> tuple[bool, list[dict[str, Any]]]:
     ]
 
 
+def _run_bridge_check() -> tuple[bool, dict[str, Any]]:
+    script = ROOT / 'scripts' / 'excalidraw_bridge.py'
+    if not script.exists():
+        return False, {'error': 'excalidraw_bridge.py not found'}
+
+    cp = subprocess.run(
+        [
+            sys.executable,
+            str(script),
+            '--mode',
+            'flow',
+            '--sample',
+            '--compact',
+        ],
+        capture_output=True,
+        text=True,
+        timeout=120,
+        cwd=ROOT,
+    )
+    ok = cp.returncode == 0 and bool(cp.stdout.strip())
+    payload = {
+        'command': 'python3 scripts/excalidraw_bridge.py --mode flow --sample --compact',
+        'output_preview': (cp.stdout[:500] if cp.stdout else ''),
+        'stderr': (cp.stderr[:500] if cp.stderr else ''),
+    }
+    return ok, payload
+
+
 def create_app() -> FastAPI:
     if FastAPI is None:
         raise RuntimeError('请先安装 fastapi 与 uvicorn（pip install fastapi uvicorn）')
@@ -56,10 +85,18 @@ def create_app() -> FastAPI:
         from doctor import collect_run_report
         return collect_run_report(ROOT)
 
-
     @app.get('/diag/style')
     def diag_style() -> dict[str, object]:
         return collect_style_guard_report(ROOT)
+
+    @app.get('/diag/excalidraw')
+    def diag_excalidraw() -> dict[str, Any]:
+        passed, payload = _run_bridge_check()
+        return {
+            'provider': 'nichecraft',
+            'passed': passed,
+            **payload,
+        }
 
     @app.get('/diag/latest')
     def diag_latest(limit: int = 10) -> list[dict[str, Any]]:
