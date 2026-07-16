@@ -1,0 +1,198 @@
+{
+  "source_repo": "zarazhangrui/beautiful-html-templates",
+  "pack": "Beautiful HTML Templates - Bold Design Pack",
+  "canvas_policy": {
+    "layout_model": "fixed-stage",
+    "canvas_width": 1920,
+    "canvas_height": 1080,
+    "scaling": "scale-stage-to-viewport",
+    "mobile_behavior": "preserve 16:9 stage; letterbox or pillarbox instead of reflowing slide content"
+  },
+  "overlap_count": 7,
+  "overlap_templates": [
+    {
+      "slug": "block-frame",
+      "name": "BlockFrame",
+      "tagline": "Neobrutalist deck with pastel-neon color blocks and chunky black borders.",
+      "mood": [
+        "bold",
+        "playful",
+        "graphic",
+        "fresh"
+      ],
+      "tone": [
+        "confident",
+        "graphic",
+        "pop",
+        "design-led"
+      ],
+      "formality": "medium-low",
+      "density": "high",
+      "scheme": "light",
+      "best_for": "Anything that should feel pop-graphic and design-led: indie SaaS launches, agency credentials, creative reviews, brand redesigns. Also a strong unexpected pick for tech, finance, or research when the speaker wants to land as confident and contemporary rather than buttoned-up.",
+      "avoid_for": "Contexts that require quiet institutional restraint or traditional weight (regulated disclosures, formal legal briefs).",
+      "preview_md": "bold-template-pack/templates/block-frame/preview.md",
+      "design_md": "bold-template-pack/templates/block-frame/design.md"
+    },
+    {
+      "slug": "grove",
+      "name": "Grove",
+      "tagline": "Forest-green canvas with cream type, classical Playfair serifs, and a single rust accent.",
+      "mood": [
+        "organic",
+        "considered",
+        "warm",
+        "literary",
+        "natural"
+      ],
+      "tone": [
+        "classical",
+        "warm",
+        "considered",
+        "patient"
+      ],
+      "formality": "medium-high",
+      "density": "medium",
+      "scheme": "mixed",
+      "best_for": "Anything that should feel organic, considered, and grown-up: sustainability and wellness brands, outdoor / nature products, wineries and restaurants, literary or arts decks, advisory deliverables, bilingual EN/CN reports. Also a calm, distinctive choice for tech, research, or business decks that want patience over urgency.",
+      "avoid_for": "Decks that need neon energy or rapid-fire pop — the forest-green canvas and Playfair serif commit to a slow, classical voice.",
+      "preview_md": "bold-template-pack/templates/grove/preview.md",
+      "design_md": "bold-template-pack/templates/grove/design.md"
+    },
+    {
+      "slug": "long-table",
+      "name": "Long Table",
+      "tagline": "Warm cream and rust-red supper-club aesthetic with bold uppercase grotesk headlines, Fraunces serifs, and pill-shaped outlined buttons.",
+      "mood": [
+        "warm",
+        "intimate",
+        "modern",
+        "friendly",
+        "small-batch",
+        "social",
+        "hospitality"
+      ],
+      "tone": [
+        "warm",
+        "playful",
+        "considered",
+        "social",
+        "magazine-friendly",
+        "modern-editorial"
+      ],
+      "formality": "medium",
+      "density": "medium",
+      "scheme": "light",
+      "best_for": "Anything that should feel like a warm, intimate, modern hospitality / community brand: supper clubs, dinner series, small restaurants, creative-studio events, membership pitches, lifestyle and wine brands. Equally good for any deck wanting a single warm accent colour, mixed-weight typography, and a social-media-aware modern-editorial voice.",
+      "avoid_for": "Decks that need corporate polish, technical density, or a cold / minimalist register — the rust-red palette and bold serif mix are intentionally warm and people-facing.",
+      "preview_md": "bold-template-pack/templates/long-table/preview.md",
+      "design_md": "bold-template-pack/templates/long-table/design.md"
+    },
+    {
+      "slug": "monochrome",
+      "name": "Monochrome",
+      "tagline": "Ivory ledger paper with all-black type; Lora serif headlines, Jost body, no color at all.",
+      "mood": [
+        "restrained",
+        "literary",
+        "archival",
+        "ledger"
+      ],
+      "tone": [
+        "literary",
+        "considered",
+        "neutral",
+        "honest"
+      ],
+      "formality": "high",
+      "density": "high",
+      "scheme": "light",
+      "best_for": "Anything that should feel like a hand-typeset ledger: user research synthesis, white papers, longform reports, academic and policy briefs, advisory deliverables, bilingual EN/CN reports. Equally good for tech, design, or brand decks that want their words to be the only thing on the page.",
+      "avoid_for": "Decks that need visual personality or color-led storytelling — the all-ink palette is intentionally austere.",
+      "preview_md": "bold-template-pack/templates/monochrome/preview.md",
+      "design_md": "bold-template-pack/templates/monochrome/design.md"
+    },
+    {
+      "slug": "pin-and-paper",
+      "name": "Pin & Paper",
+      "tagline": "Yellow paper with safety-pin illustrations, ink-blue handwritten Caveat, paper-grain texture.",
+      "mood": [
+        "crafted",
+        "handmade",
+        "warm",
+        "thoughtful",
+        "literary"
+      ],
+      "tone": [
+        "literary",
+        "intimate",
+        "warm",
+        "grounded"
+      ],
+      "formality": "medium",
+      "density": "medium",
+      "scheme": "light",
+      "best_for": "Anything that should feel hand-crafted, warm, and literary: qualitative research findings, founder reflections, longform brand stories, workshop debriefs. The signature safety-pin illustrations and paper-grain texture make it especially good for any deck — including tech or business — that wants personality and warmth over polish.",
+      "avoid_for": "Decks that need to feel digital-native polished or rigorously data-driven — handwritten Caveat is intentionally informal.",
+      "preview_md": "bold-template-pack/templates/pin-and-paper/preview.md",
+      "design_md": "bold-template-pack/templates/pin-and-paper/design.md"
+    },
+    {
+      "slug": "raw-grid",
+      "name": "Raw Grid",
+      "tagline": "Neo-brutalist deck with thick borders, offset shadows, and a pink/sage/ink palette.",
+      "mood": [
+        "raw",
+        "punchy",
+        "energetic",
+        "confident"
+      ],
+      "tone": [
+        "direct",
+        "modern",
+        "no-nonsense",
+        "graphic"
+      ],
+      "formality": "medium-low",
+      "density": "high",
+      "scheme": "light",
+      "best_for": "Anything that should feel direct and graphic-confident: founder pitches, accelerator demos, brand decks, indie launches, creator portfolios. Strong for stat slides, comparison tables, and process flows. Equally good for tech, research, or finance when the speaker wants the deck to feel scrappy-confident rather than buttoned-up.",
+      "avoid_for": "Contexts that need to feel soft, warm, or intentionally quiet — the brutalist borders and offset shadows commit to a graphic voice.",
+      "preview_md": "bold-template-pack/templates/raw-grid/preview.md",
+      "design_md": "bold-template-pack/templates/raw-grid/design.md"
+    },
+    {
+      "slug": "soft-editorial",
+      "name": "Soft Editorial",
+      "tagline": "Cormorant Garamond serif on warm paper with sage, blush, and lemon accents.",
+      "mood": [
+        "literary",
+        "elegant",
+        "quiet",
+        "warm-classical"
+      ],
+      "tone": [
+        "literary",
+        "considered",
+        "warm",
+        "magazine"
+      ],
+      "formality": "high",
+      "density": "low",
+      "scheme": "light",
+      "best_for": "Anything that should feel literary, elegant, and unhurried: editorial features, longform brand stories, gallery / museum decks, advisory deliverables, wedding / lifestyle media, founder essays. Equally good for tech, research, or business decks that want a Sunday-supplement warmth instead of corporate polish.",
+      "avoid_for": "Decks that need visual heat or punch — the warm-paper palette and Cormorant serif are intentionally quiet.",
+      "preview_md": "bold-template-pack/templates/soft-editorial/preview.md",
+      "design_md": "bold-template-pack/templates/soft-editorial/design.md"
+    }
+  ],
+  "selection_keys": [
+    "mood",
+    "tone",
+    "best_for",
+    "avoid_for",
+    "formality",
+    "density",
+    "scheme"
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "preset_count": 12,
+  "presets": [
+    {
+      "title": "1. Bold Signal",
+      "vibe": "Confident, bold, modern, high-impact",
+      "layout": "Colored card on dark gradient. Number top-left, navigation top-right, title bottom-left."
+    },
+    {
+      "title": "2. Electric Studio",
+      "vibe": "Bold, clean, professional, high contrast",
+      "layout": "Split panel—white top, blue bottom. Brand marks in corners."
+    },
+    {
+      "title": "3. Creative Voltage",
+      "vibe": "Bold, creative, energetic, retro-modern",
+      "layout": "Split panels—electric blue left, dark right. Script accents."
+    },
+    {
+      "title": "4. Dark Botanical",
+      "vibe": "Elegant, sophisticated, artistic, premium",
+      "layout": "Centered content on dark. Abstract soft shapes in corner."
+    },
+    {
+      "title": "5. Notebook Tabs",
+      "vibe": "Editorial, organized, elegant, tactile",
+      "layout": "Cream paper card on dark background. Colorful tabs on right edge."
+    },
+    {
+      "title": "6. Pastel Geometry",
+      "vibe": "Friendly, organized, modern, approachable",
+      "layout": "White card on pastel background. Vertical pills on right edge."
+    },
+    {
+      "title": "7. Split Pastel",
+      "vibe": "Playful, modern, friendly, creative",
+      "layout": "Two-color vertical split (peach left, lavender right)."
+    },
+    {
+      "title": "8. Vintage Editorial",
+      "vibe": "Witty, confident, editorial, personality-driven",
+      "layout": "Centered content on cream. Abstract geometric shapes as accent."
+    },
+    {
+      "title": "9. Neon Cyber",
+      "vibe": "Futuristic, techy, confident",
+      "layout": ""
+    },
+    {
+      "title": "10. Terminal Green",
+      "vibe": "Developer-focused, hacker aesthetic",
+      "layout": ""
+    },
+    {
+      "title": "11. Swiss Modern",
+      "vibe": "Clean, precise, Bauhaus-inspired",
+      "layout": ""
+    },
+    {
+      "title": "12. Paper & Ink",
+      "vibe": "Editorial, literary, thoughtful",
+      "layout": ""
+    }
+  ]
+}
