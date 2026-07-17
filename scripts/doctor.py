@@ -15,7 +15,7 @@ from anti_ai_style_guard import collect_style_guard_report
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def collect_run_report(root: Path | None = None) -> dict:
+def collect_run_report(root: Path | None = None, check_mode: str = "all") -> dict:
     root = root or ROOT
     checks: list[dict] = []
     ok = True
@@ -23,28 +23,13 @@ def collect_run_report(root: Path | None = None) -> dict:
     def add(name: str, passed: bool, fix: str = "") -> None:
         nonlocal ok
         ok &= passed
-        checks.append({"name": name, "ok": passed, "fix": fix})
+        checks.append({'name': name, 'ok': passed, 'fix': fix})
 
-    add('README.md exists', (root / 'README.md').exists(), '缺 README，用户无法按步骤安装')
-    add('SKILL.md exists', (root / 'SKILL.md').exists(), '缺 SKILL.md，产品说明不完整')
-    add('install.sh exists', (root / 'install.sh').exists(), '运行: bash install.sh')
-    add('setup.py exists', (root / 'scripts/setup.py').exists(), '缺一键 setup 入口')
-    add('smoke.py exists', (root / 'scripts/smoke.py').exists(), '缺核心 smoke 入口')
-    add('python available', shutil.which('python3') is not None or shutil.which('python') is not None, '请安装 Python 3')
-
-    pkg = root / 'package.json'
-    if pkg.exists():
-        try:
-            scripts = json.loads(pkg.read_text()).get('scripts', {})
-            for script in ['setup', 'doctor', 'smoke', 'test']:
-                add(f'npm script {script}', script in scripts, f'在 package.json scripts 中补充 {script}')
-        except Exception as exc:
-            add('package.json parseable', False, f'JSON 解析失败: {exc}')
-    else:
-        print('[INFO] package.json absent; shell/python one-click path is primary')
-
-    bridge_script = root / 'scripts' / 'excalidraw_bridge.py'
-    if bridge_script.exists():
+    def run_excalidraw_bridge_check() -> bool:
+        bridge_script = root / 'scripts' / 'excalidraw_bridge.py'
+        if not bridge_script.exists():
+            add('excalidraw bridge script', False, '缺 scripts/excalidraw_bridge.py')
+            return False
         try:
             with tempfile.TemporaryDirectory(prefix='nichecraft-excalidraw-') as tmpdir:
                 out = Path(tmpdir) / 'sample.excalidraw'
@@ -63,28 +48,64 @@ def collect_run_report(root: Path | None = None) -> dict:
                     stderr=subprocess.DEVNULL,
                 )
                 add('excalidraw bridge smoke', out.exists())
+                return out.exists()
         except Exception:
             add(
                 'excalidraw bridge smoke',
                 False,
                 '运行 python scripts/excalidraw_bridge.py --mode flow --sample --output /tmp/sample.excalidraw',
             )
-    else:
-        add('excalidraw bridge script', False, '缺 scripts/excalidraw_bridge.py')
+            return False
+
+    def run_hallmark_bridge_check() -> bool:
+        script = root / 'scripts' / 'hallmark_bridge.py'
+        if not script.exists():
+            add('hallmark_bridge.py exists', False, '新增 scripts/hallmark_bridge.py')
+            return False
+        try:
+            subprocess.check_call([sys.executable, str(script), '--smoke'], cwd=root)
+            add('hallmark bridge smoke', True)
+            return True
+        except Exception as exc:
+            add('hallmark bridge smoke', False, f'运行 python scripts/hallmark_bridge.py --smoke 失败: {exc}')
+            return False
+
+    if check_mode in ('all', 'core'):
+        add('README.md exists', (root / 'README.md').exists(), '缺 README，用户无法按步骤安装')
+        add('SKILL.md exists', (root / 'SKILL.md').exists(), '缺 SKILL.md，产品说明不完整')
+        add('install.sh exists', (root / 'install.sh').exists(), '运行: bash install.sh')
+        add('setup.py exists', (root / 'scripts/setup.py').exists(), '缺一键 setup 入口')
+        add('smoke.py exists', (root / 'scripts/smoke.py').exists(), '缺核心 smoke 入口')
+        add('python available', shutil.which('python3') is not None or shutil.which('python') is not None, '请安装 Python 3')
+
+        pkg = root / 'package.json'
+        if pkg.exists():
+            try:
+                scripts = json.loads(pkg.read_text()).get('scripts', {})
+                for script in ['setup', 'doctor', 'smoke', 'test']:
+                    add(f'npm script {script}', script in scripts, f'在 package.json scripts 中补充 {script}')
+            except Exception as exc:
+                add('package.json parseable', False, f'JSON 解析失败: {exc}')
+        else:
+            print('[INFO] package.json absent; shell/python one-click path is primary')
+
+        add('excalidraw bridge smoke', run_excalidraw_bridge_check())
+
+        gate = root / 'scripts/product_convergence_gate.py'
+        if gate.exists():
+            try:
+                subprocess.check_call([sys.executable, str(gate), '--json'], cwd=root, stdout=subprocess.DEVNULL)
+                add('product convergence gate', True)
+            except Exception:
+                add('product convergence gate', False, '运行 python scripts/product_convergence_gate.py --json 查看详情')
+
+    if check_mode in ('all', 'hallmark', 'hallmark-bridge'):
+        run_hallmark_bridge_check()
 
     slop = collect_style_guard_report(root)
-    # 反 AI 风格检测为辅助项：不作为主环境健康直接失败条件，避免历史文本风格污染导致误阻断
     for item in slop.get('checks', []):
         if not bool(item.get('ok', False)):
             print(f"[WARN] {item.get('name')} (样式风险) — {item.get('fix', '').strip()}")
-
-    gate = root / 'scripts/product_convergence_gate.py'
-    if gate.exists():
-        try:
-            subprocess.check_call([sys.executable, str(gate), '--json'], cwd=root, stdout=subprocess.DEVNULL)
-            add('product convergence gate', True)
-        except Exception:
-            add('product convergence gate', False, '运行 python scripts/product_convergence_gate.py --json 查看详情')
 
     return {
         'checked_at': datetime.utcnow().isoformat() + 'Z',
@@ -100,7 +121,13 @@ def check(name: str, ok: bool, fix: str = "") -> bool:
 
 
 def main() -> int:
-    report = collect_run_report(ROOT)
+    check_mode = 'all'
+    if '--check' in sys.argv:
+        idx = sys.argv.index('--check')
+        if idx + 1 < len(sys.argv):
+            check_mode = sys.argv[idx + 1]
+
+    report = collect_run_report(ROOT, check_mode)
     for item in report['checks']:
         mark = 'OK' if item['ok'] else 'FAIL'
         print(f"[{mark}] {item['name']}" + (f" — {item['fix']}" if (not item['ok'] and item['fix']) else ""))
