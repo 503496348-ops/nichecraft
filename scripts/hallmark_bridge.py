@@ -10,7 +10,28 @@ import argparse
 import json
 from pathlib import Path
 
-HAL_MARK_REPO = Path('/root/.hermes/skills/hallmark')
+HAL_MARK_REPO_CANDIDATES = [
+    Path(__file__).resolve().parents[1] / 'vendor' / 'hallmark',
+    Path(__file__).resolve().parents[1] / 'references' / 'hallmark',
+    Path.cwd() / 'hallmark',
+    Path.home() / '.hermes' / 'skills' / 'hallmark',
+]
+
+
+def resolve_hallmark_repo() -> Path:
+    env = __import__('os').environ.get('HALLMARK_REPO')
+    if env:
+        p = Path(env).expanduser()
+        if p.exists():
+            return p
+    for p in HAL_MARK_REPO_CANDIDATES:
+        if p.exists():
+            return p
+    return HAL_MARK_REPO_CANDIDATES[-1]
+
+
+HAL_MARK_REPO = resolve_hallmark_repo()
+
 
 
 def load_rules() -> dict:
@@ -50,8 +71,8 @@ def load_rules() -> dict:
         'anti_patterns': sorted(set(anti_patterns)),
         'structure_rules': sorted(set(structure_rules)),
         'microinteractions': sorted(set(micro)),
-        'motion_corpus': sorted(set(motion)),
-        'responsive_blocks': sorted(set(responsive)),
+        'motion': sorted(set(motion)),
+        'responsive': sorted(set(responsive)),
     }
 
 
