@@ -1,13 +1,10 @@
 ---
 name: nichecraft
-version: 2.4.0
 description: "飞书白板设计系统 + AI原生PPTX引擎 + HTML演示生成器。当需要创建白板、生成PPT、制作演示文稿时使用。"
-author: AtomCollide-智械工坊团队
 license: MIT
-tags: [feishu, whiteboard, design-system, svg, pptx, html, presentation, 飞书, 白板, PPT, HTML]
-requires_tools: [terminal, read_file, write_file]
-requires_toolsets: [terminal, file]
-
+metadata:
+  author: AtomCollide-智械工坊团队
+  version: 2.4.0
 triggers:
   - PPT生成
   - 白板设计
