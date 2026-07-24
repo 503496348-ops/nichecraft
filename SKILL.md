@@ -5,15 +5,17 @@ license: MIT
 metadata:
   author: AtomCollide-智械工坊团队
   version: 2.4.0
-triggers:
-  - PPT生成
-  - 白板设计
-  - 演示文稿
-  - nichecraft
-  - 有点东西
 ---
 
 # 有点东西 · Nichecraft 2.4
+
+## 触发条件
+
+- PPT生成
+- 白板设计
+- 演示文稿
+- nichecraft
+- 有点东西
 
 ## HTML Deck 交互动效策略（v2.4.0）
 
